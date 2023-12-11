@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITMS-01</title>
+  <style>
+    body {
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 90vh;
+      margin: 0;
+      font-size: 2rem;
+      background-color: #96B6C5;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px;
+      width: 60px;
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #7895CB;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover{
+        background-color: #F1F0E8;
+        color: black;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Sequence Calculator</h2>
+    <label for="n">Enter a number (n):</label>
+    <input type="number" id="n" placeholder="Enter #" min="0" size="">
+    
+    <button onclick="computeSequence('fibonacci')">Fibonacci</button>
+    <button onclick="computeSequence('tribonacci')">Tribonacci</button>
+    <button onclick="computeSequence('lucas')">Lucas</button>
+
+    <div id="result"></div>
+  </div>
+
+  
+  <script>
+    function computeSequence(type) {
+      const n = document.getElementById('n').value;
+      const resultElement = document.getElementById('result');
+      
+      if (n === '') {
+        resultElement.textContent = 'Please enter a number.';
+        return;
+      }
+
+      const sequence = generateSequence(type, parseInt(n));
+      resultElement.textContent = `${type} Sequence: ${sequence.join(', ')}`;
+    }
+
+    function generateSequence(type, n) {
+      const sequence = [];
+      if (n === 0) return sequence;
+
+      if (type === 'fibonacci') {
+        sequence.push(0);
+        if (n > 1) sequence.push(1);
+        for (let i = 2; i < n; i++) {
+          sequence.push(sequence[i - 1] + sequence[i - 2]);
+        }
+      } else if (type === 'tribonacci') {
+        sequence.push(0);
+        if (n > 1) sequence.push(1);
+        if (n > 2) sequence.push(1);
+        for (let i = 3; i < n; i++) {
+          sequence.push(sequence[i - 1] + sequence[i - 2] + sequence[i - 3]);
+        }
+      } else if (type === 'lucas') {
+        sequence.push(2);
+        if (n > 1) sequence.push(1);
+        for (let i = 2; i < n; i++) {
+          sequence.push(sequence[i - 1] + sequence[i - 2]);
+        }
+      }
+
+      return sequence;
+    }
+  </script>
+</body>
+</html>
